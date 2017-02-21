@@ -1,0 +1,23 @@
+procedure_id	procedure_desc	min_score	max_score	norm_distance
+ED_2b	Admit Decision Time to ED Departure Time for Admitted Patients	0	668	1
+OP_20	Median Time from ED Arrival to Provider Contact for ED patients	0	575	1
+STK_4	Thrombolytic Therapy	0	100	1
+IMM_2	Influenza Immunization	0	100	1
+OP_31	Percentage of patients aged 18 years and older who had cataract surgery and had improvement in visual function achieved within 90 days following the cataract surgery	0	100	1
+OP_30	Colonoscopy Interval for Patients with a History of Adenomatous Polyps - Avoidance of Inappropriate Use	0	100	1
+OP_29	Appropriate Follow-Up Interval for Normal Colonoscopy in Average Risk Patients	0	100	1
+OP_23	Head CT or MRI Scan Results for Acute Ischemic Stroke or Hemorrhagic Stroke Patients who Received Head CT or MRI Scan Interpretation Within 45 minutes of ED Arrival	0	100	1
+VTE_6	Hospital Acquired Potentially-Preventable Venous Thromboembolism	0	93	1
+PC_01	Elective Delivery	0	86	1
+OP_5	Median Time to ECG	0	56	1
+OP_22	Left without being seen	0	29	1
+ED_1b	Median Time from ED Arrival to ED Departure for Admitted ED Patients	60	1368	0.9561403508772
+OP_3b	Median Time to Transfer to Another Facility for Acute Coronary Intervention- Reporting Rate	18	389	0.9537275064267
+OP_21	Median Time to Pain Management for Long Bone Fracture	12	258	0.953488372093
+OP_18b	Median Time from ED Arrival to ED Departure for Discharged ED Patients	46	752	0.938829787234
+OP_1	Median Time to Fibrinolysis	10	97	0.8969072164948
+IMM_3_OP_27_FAC_ADHPCT	Healthcare workers given influenza vaccination	11	100	0.89
+OP_2	Fibrinolytic Therapy Received Within 30 Minutes of ED Arrival	15	100	0.85
+VTE_5	Venous Thromboembolism Warfarin Therapy Discharge Instructions	16	100	0.84
+OP_4	Aspirin at Arrival	36	100	0.64
+EDV	Emergency Department Volume	NULL	NULL	NULL

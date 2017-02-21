@@ -1,0 +1,40 @@
+To determine hospital quality, I used the Hospital Value-Based Purchasing program guidelines (HVBP) as a starting point to determine my measures. HVBP rewards Medicare providers for the quality of care they provide by making annual adjustments to hospital payment rates. Each year, HVBP chooses a few select procedures from the “Complications”, “Readmissions and Deaths”, “Timely and Effective Care”, and other files to rank hospital quality. I decided to model my choice of top 10 hospitals for high-quality care based on these files as well. Note that each hospital has one time period per measure. This aligns with the information and dates found in this HVBP infographic: http://www.stratishealth.org/documents/VBP-FY2017.pdf. I decided to rank the hospitals based on these measures below.
+
+Category “Timely and Effective Care”
+OP_18b: Median Time from ED Arrival to ED Departure for Discharged ED Patients
+OP_20: Median Time from ED Arrival to Provider Contact for ED patients
+OP_21: Median Time to Pain Management for Long Bone Fracture
+*For each measure, lower scores indicate better hospital performance.
+
+Category “Complications”
+PSI_90_SAFETY: Serious complications
+PSI_7_CVCBI: Infections from a large venous catheter
+PSI_13_POST_SEPSIS: Blood stream infection after surgery
+*For each measure, lower scores indicate better hospital performance.
+
+Category “Readmissions and Deaths"
+MORT_30_AMI: Acute Myocardial Infarction (AMI) 30-Day Mortality Rate
+MORT_30_HF: Heart Failure (HF) 30-Day Mortality Rate
+MORT_30_PN: Pneumonia 30-Day Mortality Rate
+*For each measure, lower scores indicate better hospital performance.
+**The measures in this category reflect the choices made by HVBP for 2017 (http://www.stratishealth.org/documents/VBP-FY2017.pdf)
+
+Method
+Only hospitals that had scores for at least 2 measures in each category qualified for ranking.
+Any score that has a footnote was excluded.
+Any score that indicated “Not Available” was excluded.
+Each category for each hospital was given a NORM_SCORE value which is the average of all the measure scores in that category normalized by the maximum possible score.
+Each hospital was given an OVERALL_SCORE which is an aggregate of each category score. The best possible score is 0 and the worst possible score is 3.
+I ranked the hospitals on lowest OVERALL_SCORE and grabbed the top 10 hospitals.
+
+hospital.hospital_id  hospital.hospital_name  procedure_score.num_procedures  procedures_score  procedures_min_score  procedures_max_score  procedures_norm_score complication_score.num_complications  complications_score complications_min_score complications_max_score complications_norm_score  readmission_score.num_readmissions  readmissions_score  readmissions_min_score  readmissions_max_score  readmissions_norm_score overall_score worst_overall_score best_overall_score
+330214  NYU HOSPITALS CENTER  3 228.0 58  1585  0.13311893595506667 3 6.96  4.97  31.33 0.2507064484427 3 29.3  24.7  64.7  0.4577493815837 0.84157476598146667 3 0
+50158 ENCINO HOSPITAL MEDICAL CENTER  3 148.0 58  1585  0.0982638156841 2 0.88  0.47  3.37  0.2298077653674 3 33.400000000000006  24.7  64.7  0.52573264960116667 0.85380423065266667 3 0
+50755 SHERMAN OAKS HOSPITAL 3 187.0 58  1585  0.12756967899853333 3 10.450000000000001  4.97  31.33 0.275363499192733333  29.2  24.7  64.7  0.45859279023876667 0.86152596843003333 3 0
+50663 LOS ANGELES COMMUNITY HOSPITAL  3 222.0 58  1585  0.15514881784736667 2 0.83  0.47  3.37  0.21639693032445  3 31.8  24.7  64.7  0.50713263292473333 0.87867838109655  3 0
+50135 SOUTHERN CALIFORNIA HOSPITAL AT HOLLYWOOD 3 270.0 58  1585  0.18739878617513333 3 11.439999999999998  4.97  31.33 0.24255859451216667 3 29.099999999999998  24.7  64.7  0.4648290669557 0.894786447643  3 0
+50502 SAINT VINCENT MEDICAL CENTER  3 198.0 58  1585  0.12745960888926667 3 9.930000000000001 4.97  31.33 0.22110781855483333 3 34.8  24.7  64.7  0.5480883293032 0.8966557567473 3 0
+310084  MONMOUTH MEDICAL CENTER-SOUTHERN CAMPUS 3 176.0 58  1585  0.11669262000206667 2 0.88  0.47  3.37  0.2246219892105 3 34.9  24.7  64.7  0.55545262514243333 0.896767234355  3 0
+360077  FAIRVIEW HOSPITAL 3 222.0 58  1585  0.14075049540216667 3 8.41  4.97  31.33 0.2426819430843 3 33.1  24.7  64.7  0.51408919091693333 0.8975216294034 3 0
+100034  MOUNT SINAI MEDICAL CENTER  3 217.0 58  1585  0.14559689683443333 3 8.08  4.97  31.33 0.25171011286543333 3 31.5  24.7  64.7  0.50135051001973333 0.89865751971959999 3 0
+360180  CLEVELAND CLINIC  3 187.0 58  1585  0.12825191766643333 3 5.54  4.97  31.33 0.23840371240343333 3 34.199999999999996  24.7  64.7  0.53226340365213333 0.89891903372199999 3 0
