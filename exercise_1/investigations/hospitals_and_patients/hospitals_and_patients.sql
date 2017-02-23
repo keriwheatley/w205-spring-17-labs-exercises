@@ -1,6 +1,3 @@
--- Are average scores for hospital quality or procedural 
--- variability correlated with patient survey responses?
-
 SET hive.cli.print.header=TRUE;
 
 WITH procedure_range AS
@@ -28,7 +25,6 @@ procedure_score AS
   ), 
 complication_range AS
   (SELECT complication_id
-    , MIN(CAST(score AS DECIMAL(10,2))) AS min_score
     , MAX(CAST(score AS DECIMAL(10,2))) AS max_score
   FROM hospital_complication
   WHERE complication_id IN ('PSI_90_SAFETY','PSI_7_CVCBI','PSI_13_POST_SEPSIS')
@@ -38,9 +34,6 @@ complication_range AS
 complication_score AS
   (SELECT hospital_complication.hospital_id
     , COUNT(*) AS num_complications
-    , SUM(hospital_complication.score) AS score
-    , SUM(complication_range.min_score) AS min_score
-    , SUM(complication_range.max_score) AS max_score
     , AVG(CAST(hospital_complication.score AS DECIMAL(10,2))/complication_range.max_score) AS norm_score
   FROM hospital_complication
   INNER JOIN complication_range
@@ -51,7 +44,6 @@ complication_score AS
   ), 
 readmission_range AS
   (SELECT readmission_id
-    , MIN(CAST(score AS DECIMAL(10,2))) AS min_score
     , MAX(CAST(score AS DECIMAL(10,2))) AS max_score
   FROM hospital_readmission
   WHERE readmission_id IN ('MORT_30_AMI','MORT_30_HF','MORT_30_PN')
@@ -61,9 +53,6 @@ readmission_range AS
 readmission_score AS
   (SELECT hospital_readmission.hospital_id
     , COUNT(*) AS num_readmissions
-    , SUM(hospital_readmission.score) AS score
-    , SUM(readmission_range.min_score) AS min_score
-    , SUM(readmission_range.max_score) AS max_score
     , AVG(CAST(hospital_readmission.score AS DECIMAL(10,2))/readmission_range.max_score) AS norm_score
   FROM hospital_readmission
   INNER JOIN readmission_range
@@ -71,39 +60,36 @@ readmission_score AS
   WHERE hospital_readmission.score <> 'Not Available'
     AND hospital_readmission.footnote = ''
   GROUP BY hospital_readmission.hospital_id
-  ), 
-survey_base AS
-  (SELECT MAX(CAST(base_score AS INT)) AS max_score
-    FROM hospital_survey 
-    WHERE base_score <> 'Not Available'
-  ),
-survey_consistency AS
-  (SELECT MAX(CAST(consistency_score AS INT)) AS max_score
-    FROM hospital_survey 
-    WHERE base_score <> 'Not Available'
-  ),
-survey_score AS
-  (SELECT hospital_survey.hospital_id
-    , survey_base.max_score AS max_base_score
-    , survey_consistency.max_score AS max_consistency_score
-    , (CAST(hospital_survey.base_score AS INT)/survey_base.max_score+
-      CAST(hospital_survey.consistency_score AS INT)/survey_consistency.max_score)/2 AS norm_score
-    FROM hospital_survey
-    INNER JOIN survey_base ON 1=1
-    INNER JOIN survey_consistency ON 1=1
-    WHERE hospital_survey.base_score <> 'Not Available'
-    AND hospital_survey.consistency_score <> 'Not Available'
   )
 
 SELECT 
   hospital.hospital_id
   , hospital.hospital_name
-  , procedure_score.norm_score+
+  , procedure_score.score AS procedure_score
+  , ROUND(procedure_score.norm_score,2) AS procedures_norm_score
+  , ROUND(complication_score.norm_score,2) AS complications_norm_score
+  , ROUND(readmission_score.norm_score,2) AS readmissions_norm_score
+  , ROUND(procedure_score.norm_score+
     complication_score.norm_score+
-    readmission_score.norm_score AS overall_quality_score
-  , survey_score.max_base_score AS survey_max_base_score
-  , survey_score.max_consistency_score AS survey_max_consistency_score
-  , survey_score.norm_score AS survey_overall_score
+    readmission_score.norm_score,2) AS overall_score
+  , hospital_survey.hcahps_base_score
+  , hospital_survey.hcahps_consistency_score
+  , hospital_survey.communication_with_nurses_performance_rate
+  , hospital_survey.communication_with_doctors_performance_rate
+  , hospital_survey.responsiveness_of_hospital_staff_performance_rate
+  , hospital_survey.pain_management_performance_rate
+  , hospital_survey.communication_about_medicines_performance_rate
+  , hospital_survey.cleanliness_and_quietness_of_hospital_environment_performance_rate
+  , hospital_survey.discharge_information_performance_rate
+  , hospital_survey.overall_rating_of_hospital_performance_rate
+  , ROUND((hospital_survey.communication_with_nurses_performance_rate
+    +hospital_survey.communication_with_doctors_performance_rate
+    +hospital_survey.responsiveness_of_hospital_staff_performance_rate
+    +hospital_survey.pain_management_performance_rate
+    +hospital_survey.communication_about_medicines_performance_rate
+    +hospital_survey.cleanliness_and_quietness_of_hospital_environment_performance_rate
+    +hospital_survey.discharge_information_performance_rate
+    +hospital_survey.overall_rating_of_hospital_performance_rate)/8,2) AS overall_survey_score
 FROM hospital
 INNER JOIN procedure_score
   ON hospital.hospital_id = procedure_score.hospital_id
@@ -114,8 +100,7 @@ INNER JOIN complication_score
 INNER JOIN readmission_score
   ON hospital.hospital_id = readmission_score.hospital_id
   AND readmission_score.num_readmissions >=2
-INNER JOIN survey_score
-  ON hospital.hospital_id = survey_score.hospital_id
-ORDER BY overall_quality_score ASC
-LIMIT 50
-;
+LEFT JOIN hospital_survey
+  ON hospital.hospital_id = hospital_survey.hospital_id
+ORDER BY overall_score ASC
+LIMIT 10;

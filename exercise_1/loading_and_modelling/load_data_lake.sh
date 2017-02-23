@@ -4,6 +4,7 @@ mkdir uploads
 cd uploads
 
 wget -O files.zip https://data.medicare.gov/views/bg9k-emty/files/6c902f45-e28b-42f5-9f96-ae9d1e583472?content_type=application%2Fzip%3B%20charset%3Dbinary&filename=Hospital_Revised_Flatfiles.zip
+
 unzip files.zip
 
 tail -n +2 "Timely and Effective Care - Hospital.csv" > src_procedures.csv
@@ -30,4 +31,4 @@ hdfs dfs -put ~/uploads/src_measure_desc.csv /user/w205/hospital_compare/src_mea
 
 cd ~
 
-# rm -r uploads
+-- rm -r uploads

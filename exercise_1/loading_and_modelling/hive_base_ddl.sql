@@ -1,5 +1,5 @@
-#Statement to run this script
-#hive –f /path/to/hive_base_ddl.sql
+-- Statement to run this script
+-- hive –f hive_base_ddl.sql
 
 CREATE EXTERNAL TABLE IF NOT EXISTS src_procedures
   (provider_id STRING,

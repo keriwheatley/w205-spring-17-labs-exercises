@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS hospital AS 
 SELECT DISTINCT
-  provider_id AS hospital_id,
+  CAST(provider_id AS INT) AS hospital_id,
   hospital_name AS hospital_name,
   address AS street_address,
   city,

@@ -1,7 +1,3 @@
--- What hospitals are models of high-quality care? 
--- That is, which hospitals have the most consistently 
--- high scores for a variety of procedures.
-
 SET hive.cli.print.header=TRUE;
 
 WITH procedure_range AS

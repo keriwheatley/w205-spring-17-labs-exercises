@@ -1,6 +1,14 @@
 CREATE TABLE IF NOT EXISTS hospital_survey AS 
 SELECT 
-  provider_number AS hospital_id,
-  hcahps_base_score AS base_score,
-  hcahps_consistency_score AS consistency_score
+  CAST(provider_number AS INT) AS hospital_id
+, communication_with_nurses_performance_rate
+, communication_with_doctors_performance_rate
+, responsiveness_of_hospital_staff_performance_rate
+, pain_management_performance_rate
+, communication_about_medicines_performance_rate
+, cleanliness_and_quietness_of_hospital_environment_performance_rate
+, discharge_information_performance_rate
+, overall_rating_of_hospital_performance_rate
+, hcahps_base_score
+, hcahps_consistency_score
 FROM src_surveys;

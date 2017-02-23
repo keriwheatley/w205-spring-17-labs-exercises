@@ -1,11 +1,75 @@
-hospital.state  num_procedures  procedures_score  procedures_min_score  procedures_max_score  procedures_norm_score num_complications complications_score complications_min_score complications_max_score complications_norm_score  num_readmissions  readmissions_score  readmissions_min_score  readmissions_max_score  readmissions_norm_score overall_score worst_overall_score best_overall_score
-MN  141 9462  2726  74495 0.127956745 130 410.23  184.09  1164.95 0.295407625 120 1639.9  966.3 2623  0.631712689 1.055077059 3 0
-SD  35  1956  684 18762 0.107001178 35  126.54  55.14 348 0.296927866 34  473.3 278.3 729.6 0.660642053 1.064571096 3 0
-CO  131 8781  2540  69482 0.127313352 128 464.37  200.68  1266.68 0.308194086 117 1625.1  954.2 2553.1  0.640846333 1.076353772 3 0
-TX  723 53984 14044 384418  0.14559094  657 1948.18 875.18  5547.52 0.288609606 642 8981.4  5225.6  14020.4 0.644748414 1.078948961 3 0
-MA  159 14046 3074  84005 0.168609977 151 523.97  227.41  1436.81 0.303923271 154 2001  1264.9  3331.2  0.606451216 1.078984464 3 0
-OH  345 24292 6670  182275  0.140214501 327 1110.86 490.55  3099.67 0.299319237 326 4476.2  2664.7  7062.6  0.639882476 1.079416214 3 0
-UT  90  5775  1740  47550 0.121264777 83  280.66  117.6 744.18  0.306530334 68  990.2 551 1513.6  0.655727054 1.083522165 3 0
-WI  186 11754 3596  98270 0.1194488 176 572.88  263.14  1662.86 0.296313341 172 2466.4  1402.6  3733.5  0.668144312 1.083906452 3 0
-OK  203 12981 3966  108016  0.130396495 174 459.64  194.43  1239.09 0.294666385 167 2410.8  1339.5  3672.7  0.65941235  1.08447523  3 0
-LA  202 13760 3942  108075  0.134373512 184 541.43  239.43  1518.69 0.305585414 182 2569.1  1472.8  3959.6  0.653551068 1.093509995 3 0
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+QUESTION: What states are models of high-quality care?
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+
+I reused a lot of the logic from best_hospitals.sql to build this report. The same measures are being used to determine the quality of care by state.
+
+Category “Timely and Effective Care”
+OP_18b: Median Time from ED Arrival to ED Departure for Discharged ED Patients
+OP_20: Median Time from ED Arrival to Provider Contact for ED patients
+OP_21: Median Time to Pain Management for Long Bone Fracture
+*For each measure, lower scores indicate better hospital performance.
+
+Category “Complications”
+PSI_90_SAFETY: Serious complications
+PSI_7_CVCBI: Infections from a large venous catheter
+PSI_13_POST_SEPSIS: Blood stream infection after surgery
+*For each measure, lower scores indicate better hospital performance.
+
+Category “Readmissions and Deaths"
+MORT_30_AMI: Acute Myocardial Infarction (AMI) 30-Day Mortality Rate
+MORT_30_HF: Heart Failure (HF) 30-Day Mortality Rate
+MORT_30_PN: Pneumonia 30-Day Mortality Rate
+*For each measure, lower scores indicate better hospital performance.
+**The measures in this category as the same choices made by HVBP for 2017 (http://www.stratishealth.org/documents/VBP-FY2017.pdf)
+
+Method
+1. Any score that has a footnote was excluded.
+3. Any score that indicated “Not Available” was excluded.
+4. Each category and state was given a NORM_SCORE value which is the average of all the measure scores in that category normalized by the maximum possible score.
+5. Each state was given an OVERALL_SCORE which is an aggregate of each category NORM_SCORE. The best possible score is 0 and the worst possible score is 3.
+6. I ranked the states on lowest OVERALL_SCORE and grabbed the top 10 states.
+
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+Top 10 States
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+
+1. MN
+2. SD
+3. OH
+4. MA
+5. CO
+6. WI
+7. TX
+8. IN
+9. OK
+10. UT
+
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+Query Results
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+
+hospital.state	procedures_norm_score	complications_norm_score	readmissions_norm_score	overall_score
+MN	0.13211918325481183	0.29831032499942722	0.63189670182359704	1.06232621007783609
+SD	0.1090524747879268	0.2979973137560299	0.65870114095765876	1.06575092950161546
+OH	0.14209677927253537	0.30224963226339732	0.63810982406761136	1.08245623560354405
+MA	0.17064480065019549	0.30689956569585305	0.60768803717142009	1.08523240351746863
+CO	0.12951790393604937	0.31022365818131577	0.64572657443554469	1.08546813655290983
+WI	0.12040622596259986	0.29934916548701237	0.66940804211516897	1.0891634335647812
+TX	0.15090396621112895	0.29205357150229314	0.64803677240041296	1.09099431011383505
+IN	0.14010376706476545	0.28980289949523577	0.66924734477806672	1.09915401133806794
+OK	0.13325090931921353	0.30128770333607481	0.66559738288236757	1.10013599553765591
+UT	0.1264209911780677	0.31325344170898187	0.66418885973640363	1.1038632926234532
+
