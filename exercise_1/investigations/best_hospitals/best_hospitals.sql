@@ -4,9 +4,11 @@ WITH procedure_range AS
   (SELECT procedure_id
     , MIN(CAST(score AS DECIMAL(10,2))) AS min_score
     , MAX(CAST(score AS DECIMAL(10,2))) AS max_score
+    , MAX(CAST(score AS DECIMAL(10,2)))-MIN(CAST(score AS DECIMAL(10,2))) AS score_range
   FROM hospital_procedure
   WHERE procedure_id IN ('OP_18b','OP_20','OP_21')
     AND score <> 'Not Available'
+    AND footnote = ''
   GROUP BY procedure_id
   ), 
 procedure_score AS
@@ -15,7 +17,8 @@ procedure_score AS
     , SUM(hospital_procedure.score) AS score
     , SUM(procedure_range.min_score) AS min_score
     , SUM(procedure_range.max_score) AS max_score
-    , AVG(CAST(hospital_procedure.score AS DECIMAL(10,2))/procedure_range.max_score) AS norm_score
+    , (SUM(CAST(hospital_procedure.score AS DECIMAL(10,2)))-SUM(procedure_range.min_score))/
+        SUM(procedure_range.score_range) AS norm_score
   FROM hospital_procedure
   INNER JOIN procedure_range
     ON hospital_procedure.procedure_id = procedure_range.procedure_id
@@ -27,9 +30,11 @@ complication_range AS
   (SELECT complication_id
     , MIN(CAST(score AS DECIMAL(10,2))) AS min_score
     , MAX(CAST(score AS DECIMAL(10,2))) AS max_score
+    , MAX(CAST(score AS DECIMAL(10,2)))-MIN(CAST(score AS DECIMAL(10,2))) AS score_range
   FROM hospital_complication
   WHERE complication_id IN ('PSI_90_SAFETY','PSI_7_CVCBI','PSI_13_POST_SEPSIS')
     AND score <> 'Not Available'
+    AND footnote = ''
   GROUP BY complication_id
   ),
 complication_score AS
@@ -38,7 +43,8 @@ complication_score AS
     , SUM(hospital_complication.score) AS score
     , SUM(complication_range.min_score) AS min_score
     , SUM(complication_range.max_score) AS max_score
-    , AVG(CAST(hospital_complication.score AS DECIMAL(10,2))/complication_range.max_score) AS norm_score
+    , (SUM(CAST(hospital_complication.score AS DECIMAL(10,2)))-SUM(complication_range.min_score))/
+        SUM(complication_range.score_range) AS norm_score
   FROM hospital_complication
   INNER JOIN complication_range
     ON hospital_complication.complication_id = complication_range.complication_id
@@ -50,9 +56,11 @@ readmission_range AS
   (SELECT readmission_id
     , MIN(CAST(score AS DECIMAL(10,2))) AS min_score
     , MAX(CAST(score AS DECIMAL(10,2))) AS max_score
+    , MAX(CAST(score AS DECIMAL(10,2)))-MIN(CAST(score AS DECIMAL(10,2))) AS score_range
   FROM hospital_readmission
   WHERE readmission_id IN ('MORT_30_AMI','MORT_30_HF','MORT_30_PN')
     AND score <> 'Not Available'
+    AND footnote = ''
   GROUP BY readmission_id
   ),
 readmission_score AS
@@ -61,7 +69,8 @@ readmission_score AS
     , SUM(hospital_readmission.score) AS score
     , SUM(readmission_range.min_score) AS min_score
     , SUM(readmission_range.max_score) AS max_score
-    , AVG(CAST(hospital_readmission.score AS DECIMAL(10,2))/readmission_range.max_score) AS norm_score
+    , (SUM(CAST(hospital_readmission.score AS DECIMAL(10,2)))-SUM(readmission_range.min_score))/
+        SUM(readmission_range.score_range) AS norm_score
   FROM hospital_readmission
   INNER JOIN readmission_range
     ON hospital_readmission.readmission_id = readmission_range.readmission_id

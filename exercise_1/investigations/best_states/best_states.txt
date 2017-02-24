@@ -6,7 +6,7 @@ QUESTION: What states are models of high-quality care?
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
 
-I reused a lot of the logic from best_hospitals.sql to build this report. The same measures are being used to determine the quality of care by state.
+The same measures are being used to determine the quality of care by state.
 
 Category “Timely and Effective Care”
 OP_18b: Median Time from ED Arrival to ED Departure for Discharged ED Patients
@@ -30,8 +30,8 @@ MORT_30_PN: Pneumonia 30-Day Mortality Rate
 Method
 1. Any score that has a footnote was excluded.
 3. Any score that indicated “Not Available” was excluded.
-4. Each category and state was given a NORM_SCORE value which is the average of all the measure scores in that category normalized by the maximum possible score.
-5. Each state was given an OVERALL_SCORE which is an aggregate of each category NORM_SCORE. The best possible score is 0 and the worst possible score is 3.
+4. Each state was given an AVG_NORM_SCORE value in each category which is the standardized average of the available scores.
+5. Each state was given an OVERALL_SCORE which is the sum of each category AVG_NORM_SCORE. The best possible score is 0 and the worst possible score is 3.
 6. I ranked the states on lowest OVERALL_SCORE and grabbed the top 10 states.
 
 ----------------------------------------------------------------------------
@@ -42,16 +42,16 @@ Top 10 States
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
 
-1. MN
-2. SD
-3. OH
-4. MA
-5. CO
-6. WI
-7. TX
-8. IN
-9. OK
-10. UT
+1.	SD
+2.	MN
+3.	CO
+4.	OH
+5.	WI
+6.	UT
+7.	KS
+8.	TX
+9.	OK
+10.	NE
 
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
@@ -61,15 +61,15 @@ Query Results
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
 
-hospital.state	procedures_norm_score	complications_norm_score	readmissions_norm_score	overall_score
-MN	0.13211918325481183	0.29831032499942722	0.63189670182359704	1.06232621007783609
-SD	0.1090524747879268	0.2979973137560299	0.65870114095765876	1.06575092950161546
-OH	0.14209677927253537	0.30224963226339732	0.63810982406761136	1.08245623560354405
-MA	0.17064480065019549	0.30689956569585305	0.60768803717142009	1.08523240351746863
-CO	0.12951790393604937	0.31022365818131577	0.64572657443554469	1.08546813655290983
-WI	0.12040622596259986	0.29934916548701237	0.66940804211516897	1.0891634335647812
-TX	0.15090396621112895	0.29205357150229314	0.64803677240041296	1.09099431011383505
-IN	0.14010376706476545	0.28980289949523577	0.66924734477806672	1.09915401133806794
-OK	0.13325090931921353	0.30128770333607481	0.66559738288236757	1.10013599553765591
-UT	0.1264209911780677	0.31325344170898187	0.66418885973640363	1.1038632926234532
+hospital.state	procedure_score.num_procedures	procedures_norm_score	complication_score.num_complications	complications_norm_score	readmission_score.num_readmissions	readmissions_norm_score	overall_score
+SD	42	0.151690045156385952	54	0.199042104764611667	69	0.450442774680958261	0.80117492460195588
+MN	181	0.189067570509806464	136	0.201331741136352059	201	0.430197728021837313	0.820597039667995836
+CO	138	0.191694422354012536	134	0.212205755111908507	152	0.433456963918196118	0.837357141384117161
+OH	385	0.220271500852593351	352	0.202739794040145597	382	0.420763681667815628	0.843774976560554576
+WI	257	0.172545820726194475	184	0.201759933652099348	275	0.473969951104900909	0.848275705483194732
+UT	109	0.179220556443224771	90	0.216153500047362222	79	0.456277506967776076	0.851651563458363069
+KS	149	0.189547466171298322	134	0.199322600552226194	206	0.465215253604591845	0.854085320328116361
+TX	858	0.229060885176224918	798	0.191817031923372281	724	0.436409809883691036	0.857287726983288235
+OK	249	0.201733984368787831	215	0.202669759511489628	215	0.461638697027037023	0.866042440907314482
+NE	66	0.172107565497757576	69	0.20632652556927	136	0.489726323902346765	0.868160414969374341
 
