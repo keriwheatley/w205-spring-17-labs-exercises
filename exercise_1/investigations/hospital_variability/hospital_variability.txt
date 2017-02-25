@@ -8,9 +8,9 @@ QUESTION: Which procedures have the greatest variability between hospitals?
 
 To answer this question, 
 1. I found the average standardized score mean and variance for each procedure. 
-2. I sorted the data by highest to lowest variance. 
-3. I excluded all scores that had a footnote.
-4. I exlucded all score that are 'Not Available'.
+2. I excluded all scores that had a footnote.
+3. I exlucded all score that are 'Not Available'.
+4. I sorted the data by highest to lowest variance. 
 
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
