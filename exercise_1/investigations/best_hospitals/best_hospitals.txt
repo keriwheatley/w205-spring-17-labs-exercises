@@ -34,7 +34,7 @@ Method
 4. Each category and hospital was given a NORM_SCORE value which is the standardized average of the sum of available measure scores in each category.
 5. Each hospital was given an OVERALL_SCORE which is the sum of each category NORM_SCORE. The best possible score is 0 and the worst possible score is 3.
 6. I ranked the hospitals on lowest OVERALL_SCORE and grabbed the top 10 hospitals.
-7. I added some other helpful fields that are currently commented out in the file best_hospitals.sql.
+7. I added some other helpful fields.
 
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
