@@ -25,13 +25,16 @@ MORT_30_AMI: Acute Myocardial Infarction (AMI) 30-Day Mortality Rate
 MORT_30_HF: Heart Failure (HF) 30-Day Mortality Rate
 MORT_30_PN: Pneumonia 30-Day Mortality Rate
 *For each measure, lower scores indicate better hospital performance.
-**The measures in this category as the same choices made by HVBP for 2017 (http://www.stratishealth.org/documents/VBP-FY2017.pdf)
+**The measures in this category as the same choices made by HVBP for 2017 
+(http://www.stratishealth.org/documents/VBP-FY2017.pdf)
 
 Method
 1. Any score that has a footnote was excluded.
 3. Any score that indicated “Not Available” was excluded.
-4. Each state was given an AVG_NORM_SCORE value in each category which is the standardized average of the available scores.
-5. Each state was given an OVERALL_SCORE which is the sum of each category AVG_NORM_SCORE. The best possible score is 0 and the worst possible score is 3.
+4. Each state was given an AVG_NORM_SCORE value in each category which is the 
+standardized average of the available scores.
+5. Each state was given an OVERALL_SCORE which is the sum of each category 
+AVG_NORM_SCORE. The best possible score is 0 and the worst possible score is 3.
 6. I ranked the states on lowest OVERALL_SCORE and grabbed the top 10 states.
 
 ----------------------------------------------------------------------------
