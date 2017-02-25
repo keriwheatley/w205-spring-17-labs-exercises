@@ -1,12 +1,23 @@
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
-QUESTION: What hospitals are models of high-quality care? That is, which hospitals have the most consistently high scores for a variety of procedures.
+QUESTION: What hospitals are models of high-quality care? That is, which 
+hospitals have the most consistently high scores for a variety of procedures.
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
 
-To determine hospital quality, I used the Hospital Value-Based Purchasing program guidelines (HVBP) as a starting point to determine my measures. HVBP rewards Medicare providers for the quality of care they provide by making annual adjustments to hospital payment rates. Each year, HVBP chooses a few select procedures from the “Complications”, “Readmissions and Deaths”, “Timely and Effective Care”, and other files to rank hospital quality. I decided to model my choice of top 10 hospitals for high-quality care based on these files as well. Note that each hospital has one time period per measure. This aligns with the information and dates found in this HVBP infographic: http://www.stratishealth.org/documents/VBP-FY2017.pdf. I decided to rank the hospitals based on these measures below.
+To determine hospital quality, I used the Hospital Value-Based Purchasing 
+program guidelines (HVBP) as a starting point to determine my measures. HVBP 
+rewards Medicare providers for the quality of care they provide by making 
+annual adjustments to hospital payment rates. Each year, HVBP chooses a few 
+select procedures from the “Complications”, “Readmissions and Deaths”, “Timely 
+and Effective Care”, and other files to rank hospital quality. I decided to 
+model my choice of top 10 hospitals for high-quality care based on these files 
+as well. Note that each hospital has one time period per measure. This aligns 
+with the information and dates found in this HVBP infographic: 
+http://www.stratishealth.org/documents/VBP-FY2017.pdf. I decided to rank the 
+hospitals based on these measures below.
 
 Category “Timely and Effective Care”
 OP_18b: Median Time from ED Arrival to ED Departure for Discharged ED Patients
@@ -25,15 +36,20 @@ MORT_30_AMI: Acute Myocardial Infarction (AMI) 30-Day Mortality Rate
 MORT_30_HF: Heart Failure (HF) 30-Day Mortality Rate
 MORT_30_PN: Pneumonia 30-Day Mortality Rate
 *For each measure, lower scores indicate better hospital performance.
-**The measures in this category as the same choices made by HVBP for 2017 (http://www.stratishealth.org/documents/VBP-FY2017.pdf)
+**The measures in this category as the same choices made by HVBP for 2017 
+(http://www.stratishealth.org/documents/VBP-FY2017.pdf)
 
 Method
-1. Only hospitals that had scores for at least 2 measures in each category qualified for ranking.
+1. Only hospitals that had scores for at least 2 measures in each category 
+qualified for ranking.
 2. Any score that has a footnote was excluded.
 3. Any score that indicated “Not Available” was excluded.
-4. Each category and hospital was given a NORM_SCORE value which is the standardized average of the sum of available measure scores in each category.
-5. Each hospital was given an OVERALL_SCORE which is the sum of each category NORM_SCORE. The best possible score is 0 and the worst possible score is 3.
-6. I ranked the hospitals on lowest OVERALL_SCORE and grabbed the top 10 hospitals.
+4. Each category and hospital was given a NORM_SCORE value which is the 
+standardized average of the sum of available measure scores in each category.
+5. Each hospital was given an OVERALL_SCORE which is the sum of each category 
+NORM_SCORE. The best possible score is 0 and the worst possible score is 3.
+6. I ranked the hospitals on lowest OVERALL_SCORE and grabbed the top 10 
+hospitals.
 7. I added some other helpful fields.
 
 ----------------------------------------------------------------------------
