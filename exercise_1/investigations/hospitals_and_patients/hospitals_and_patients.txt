@@ -1,33 +1,50 @@
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
-QUESTION: Are average scores for hospital quality or procedural variability correlated with patient survey responses?
+QUESTION: Are average scores for hospital quality or procedural variability 
+correlated with patient survey responses?
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
 
-The query that I have written returns the top 10 best hospitals and the top 10 worst hospitals as described in the best_hospital.txt file. Also included in the query are hospital individual procedual scores and patient survey results.
+The query that I have written returns the top 10 best hospitals and the top 10 
+worst hospitals as described in the best_hospital.txt file. Also included in 
+the query are hospital individual procedual scores and patient survey results.
 
 
 --Analyzing Procedual Variability--
 
-The overall score is calculated using 3 procedures: OP_18b, OP_20, and OP_21. According to the results from the hospital_variability.txt file:
+The overall score is calculated using 3 procedures: OP_18b, OP_20, and OP_21. 
+According to the results from the hospital_variability.txt file:
 
 OP_18b is ranked 16/22 for variability with mean 145.77 and variance 1708.37
 OP_20 is ranked 13/22 for variability with mean 26.46 and variance 262.33
 OP_21 is ranked 11/22 for variability with mean 53.09 and variance 315.85
 
-Almost every hospital ranked in the top 10 for overall quality have scores for these 3 procedures. The minimum possible sum of scores is 58 and the maximum is 1585. It appears that the sum of procedure scores for the top 100 hospitals averages around 220.
-
-Note that the top 10 worst hospitals do not have procedure scores much worse than the top 10 best hospitals. This is due to the fact that hopistals that don't meet the data requirements listed in best_hospital.txt are excluded from the report altogether. For example hospital 301309 has a footnote for OP18b, OP_20, and OP_21 making it fail to meet the "scores for at least 2 procedures" requirement.
+Every hospital ranked in the top 10 for best or worst overall quality have 
+scores for these 3 procedures. The minimum possible sum of scores is 58 and 
+the maximum is 1585. Intuitively, the procedure scores for the worst hospitals 
+are higher than the procedure scores for the best hospitals. Note that the top
+10 worst hospitals do not have procedure scores very close to the maximum 
+possible score 1585. This is due to the fact that hopistals that don't meet 
+the data requirements listed in best_hospital.txt are excluded from the report 
+altogether. For example hospital 301309 has a footnote for OP18b, OP_20, and 
+OP_21 making it fail to meet this requirement "Only hospitals that had scores
+for at least 2 measures in each category qualified for ranking".
 
 
 --Analyzing Patient Survey Responses--
 
-I decided to use the *_PERFORMANCE_RATE scores to determine overall patient satisfaction. I took the average of the eight *_PERFORMANCE_RATE scores to create the OVERALL_SURVEY_SCORE field.
+I decided to use the *_PERFORMANCE_RATE scores to determine overall patient 
+satisfaction. I took the average of the eight *_PERFORMANCE_RATE scores to create 
+the OVERALL_SURVEY_SCORE field.
 
-The overall patient survey score does not seem very correlated with overall hospital care quality. Below is a list of the top 10 best and worst hospitals and their patient satisfaction scores. Patient satisfaction scores for the best and worst quality hospitals are very similar. The indicates there is little correlation between patient satisfaction and overall hospital quality.
-
+The overall patient survey score does not seem very correlated with overall 
+hospital care quality. Below is a list of the top 10 best and worst hospitals 
+and their patient satisfaction scores. Patient satisfaction scores for the best 
+and worst quality hospitals are very similar. This indicates there is little 
+correlation between patient satisfaction and overall hospital quality (using
+the metrics that I have determined in file best_hospitals.txt).
 
 TOP 10 BEST OVERALL
 1. 	330214	NYU HOSPITALS CENTER	71.55%
