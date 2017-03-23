@@ -25,6 +25,17 @@ Instructions for environment setup:
 	psql -U postgres -c "CREATE DATABASE tcount;"
 	psql -U postgres -d tcount -c "CREATE TABLE tweetwordcount (word TEXT PRIMARY KEY NOT NULL, count INT NOT NULL);"
 
+Instructions to update Twitter credentials:
+  1. Navigate to tweets.py file:
+        cd w205-spring-17-labs-exercises/exercise_2/extweetwordcount/src/spouts
+  2. Open the file using a file editor, such as vim, and replace these keys:
+        twitter_credentials = {
+          "consumer_key"        :  "<your_consumer_key>",
+          "consumer_secret"     :  "<your_consumer_secret>",
+          "access_token"        :  "<your_access_token>",
+          "access_token_secret" :  "<your_access_token_secret>",
+          }
+	  
 Instructions to run application:
   1. Navigate to directory:
         cd w205-spring-17-labs-exercises/exercise_2/extweetwordcount
